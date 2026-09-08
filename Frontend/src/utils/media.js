@@ -4,5 +4,8 @@ const API_ORIGIN = (
 
 export function resolveImageUrl(path) {
   if (!path) return null;
-  return `${API_ORIGIN}${path}`;
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return path; // already a full URL (Cloudinary) — use as-is
+  }
+  return `${API_ORIGIN}${path}`; // relative path (old local uploads) — prepend origin
 }
